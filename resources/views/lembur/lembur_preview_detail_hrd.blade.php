@@ -17,8 +17,46 @@
                 <div class="card-header d-flex justify-content-between">
                     <h5> Pengajuan Lembur Hari Biasa </h5>
                     <span>
-                        <button class="btn btn-primary" id="rubah" type="button" onclick="togleRubah()">Rubah</button>
-                        <button class="btn btn-success" id="setuju">Persetujuan</button>
+                        @foreach ($detail as $d)
+                            <button class="btn btn-primary" id="rubah" type="button" onclick="togleRubah()">Edit</button>
+                            {{-- <button class="btn btn-success" id="setuju">Persetujuan</button> --}}
+
+                            @if ($d->status == "Disetujui")
+
+                                <button class="btn btn-success btn-xs" 
+                                        data-toggle="modal" 
+                                        data-target="#tambahData{{ $d->id }}">
+                                        <i class="fa fa-check-circle" data-toogle="tooltip" data-placement="top" title="Terima Pengajuan "></i>
+                                </button>
+
+
+                                <div class="modal fade" id="tambahData{{ $d->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="tambahData{{ $d->id }}"
+                                aria-hidden="true">
+
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="tambahData{{ $d->id }}">Terima Pengajuan</h5>
+                                                    <button type="button" class="btn close btn-danger" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="/lembur/terima_pengajuan_lembur" method="POST">
+                                                    @csrf
+                                                    <h4>Apakah Anda Yakin Ingin Menerima Pengajuan Lembur ?</h4>
+                                                    <input type="hidden" name="lembur_pengajuan_id" value="{{ $d->id }}">
+                                                    <div class="form-group mt-5">
+                                                        <button class="btn col-lg-2 btn-primary btn-lg" type="submit"> Terima </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
                     </span>
                 </div>
                 <div class="card-body table-respom">
@@ -196,14 +234,14 @@
 function togleRubah(){
     var status = document.getElementById("rubah").innerHTML;
     
-    if(status == "Rubah"){
+    if(status == "Edit"){
         document.getElementById("rubah").innerHTML = "Batal";
 
         for(var i=0; i<document.forms.form_lembur.length; i++){
             document.forms.form_lembur[i].hidden = false;
         }
     }else{
-        document.getElementById("rubah").innerHTML = "Rubah";
+        document.getElementById("rubah").innerHTML = "Edit";
         for(var i=0; i<document.forms.form_lembur.length; i++){
             document.forms.form_lembur[i].hidden = true;
         }

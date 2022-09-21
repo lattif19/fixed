@@ -102,8 +102,8 @@
                                                                         <div class="modal-body">
                                                                             <form action="/lembur/terima_pengajuan_lembur" method="POST">
                                                                                 @csrf
-                                                                                <h4>Apakah Anda Yakin Ingin Menerima Pengeajuan Lembur ?</h4>
-                                                                                <h5>Pengjaun dari : <strong>{{ $d->nama }}</strong></h5>
+                                                                                <h4>Apakah Anda Yakin Ingin Menerima Pengajuan Lembur ?</h4>
+                                                                                <h5>Pengajuan dari : <strong>{{ $d->nama }}</strong></h5>
                                                                                 <h5>Periode  : <strong>{{ $d->periode }}</strong></h5>
                                                                                 <input type="hidden" name="lembur_pengajuan_id" value="{{ $d->id }}">
                                                                                 <div class="form-group mt-5">
